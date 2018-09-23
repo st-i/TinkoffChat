@@ -8,40 +8,45 @@
 
 import UIKit
 
+public enum ApplicationState: Int {
+    case active
+    case inactive
+    case background
+    case notRunning
+}
+
 class Logger: NSObject {
 
-    static func logAppState(_ previousState: UIApplicationState, _ methodName: String) {
+    static func logAppState(_ previousState: ApplicationState, _ methodName: String) {
         var previousStateName: String = ""
         var currentStateName: String = ""
         
-//        if let unwrappedPreviousState = previousState {
-            switch previousState {
-            case .active:
-                previousStateName = "ACTIVE" //"Active"
-            case .inactive:
-                previousStateName = "INACTIVE" //"Inactive"
-            case .background:
-                previousStateName = "BACKGROUND" //"Background"
-            }
-//        }else{
-//            previousStateName = 
-//        }
+        switch previousState {
+        case .active:
+            previousStateName = "ACTIVE"
+        case .inactive:
+            previousStateName = "INACTIVE"
+        case .background:
+            previousStateName = "BACKGROUND"
+        case .notRunning:
+            previousStateName = "NOT RUNNING"
+        }
         
         switch UIApplication.shared.applicationState {
         case .active:
-            currentStateName = "ACTIVE" //"Active"
+            currentStateName = "ACTIVE"
         case .inactive:
-            currentStateName = "INACTIVE" //"Inactive"
+            currentStateName = "INACTIVE"
         case .background:
-            currentStateName = "BACKGROUND" //"Background"
+            currentStateName = "BACKGROUND"
         }
         
         let stringToLog = "Application moved from \(previousStateName) state to \(currentStateName) state: \(methodName)"
-        
         print(stringToLog)
     }
     
     static func logViewControllerMethod(_ methodName: String) {
-        print(methodName)
+        let stringToLog = "View Controller's called method is \(methodName)"
+        print(stringToLog)
     }
 }

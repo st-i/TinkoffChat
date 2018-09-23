@@ -9,46 +9,50 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    private var logToggle: Bool = true //задание со звездочкой
 
-    override func viewDidLoad() { //+
+    override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        Logger.logViewControllerMethod(#function)
+        logViewControllerMethod(#function)
     }
     
-    override func viewWillAppear(_ animated: Bool) { //+
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        Logger.logViewControllerMethod(#function)
+        logViewControllerMethod(#function)
     }
     
-    override func viewDidAppear(_ animated: Bool) { //+
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        Logger.logViewControllerMethod(#function)
+        logViewControllerMethod(#function)
     }
     
-    override func viewWillLayoutSubviews() { //+
+    override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        Logger.logViewControllerMethod(#function)
+        logViewControllerMethod(#function)
     }
     
-    override func viewDidLayoutSubviews() { //+
+    override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        Logger.logViewControllerMethod(#function)
+        logViewControllerMethod(#function)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        Logger.logViewControllerMethod(#function)
+        logViewControllerMethod(#function)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        Logger.logViewControllerMethod(#function)
+        logViewControllerMethod(#function)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    //MARK: Helpers
+    
+    private func logViewControllerMethod(_ methodName: String) {
+        if logToggle {
+            Logger.logViewControllerMethod(methodName)
+        }
     }
 
     //MARK: Actions
