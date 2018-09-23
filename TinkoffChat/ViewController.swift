@@ -10,8 +10,6 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    private var logToggle: Bool = true //задание со звездочкой
-
     override func viewDidLoad() {
         super.viewDidLoad()
         logViewControllerMethod(#function)
@@ -50,9 +48,7 @@ class ViewController: UIViewController {
     //MARK: Helpers
     
     private func logViewControllerMethod(_ methodName: String) {
-        if logToggle {
-            Logger.logViewControllerMethod(methodName)
-        }
+        Logger.logViewControllerMethod(methodName)
     }
 
     //MARK: Actions

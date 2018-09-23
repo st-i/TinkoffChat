@@ -13,7 +13,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var previousAppState: ApplicationState = .notRunning
-    private var logToggle: Bool = true //задание со звездочкой
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         logAppState(#function)
@@ -43,13 +42,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //MARK: Helpers
     
     private func logAppState(_ methodName: String) {
-        if logToggle {
-            Logger.logAppState(previousAppState, methodName)
-            if methodName == "applicationWillTerminate" {
-                previousAppState = .notRunning
-            }else{
-                previousAppState = ApplicationState(rawValue: UIApplication.shared.applicationState.rawValue)!
-            }
+        Logger.logAppState(previousAppState, methodName)
+        if methodName == "applicationWillTerminate" {
+            previousAppState = .notRunning
+        }else{
+            previousAppState = ApplicationState(rawValue: UIApplication.shared.applicationState.rawValue)!
         }
     }
 }

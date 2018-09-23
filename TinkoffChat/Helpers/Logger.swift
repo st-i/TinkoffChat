@@ -16,37 +16,43 @@ public enum ApplicationState: Int {
 }
 
 class Logger: NSObject {
+    
+    static var logToggle: Bool = false //задание со звездочкой
 
     static func logAppState(_ previousState: ApplicationState, _ methodName: String) {
-        var previousStateName: String = ""
-        var currentStateName: String = ""
-        
-        switch previousState {
-        case .active:
-            previousStateName = "ACTIVE"
-        case .inactive:
-            previousStateName = "INACTIVE"
-        case .background:
-            previousStateName = "BACKGROUND"
-        case .notRunning:
-            previousStateName = "NOT RUNNING"
+        if logToggle {
+            var previousStateName: String = ""
+            var currentStateName: String = ""
+            
+            switch previousState {
+            case .active:
+                previousStateName = "ACTIVE"
+            case .inactive:
+                previousStateName = "INACTIVE"
+            case .background:
+                previousStateName = "BACKGROUND"
+            case .notRunning:
+                previousStateName = "NOT RUNNING"
+            }
+            
+            switch UIApplication.shared.applicationState {
+            case .active:
+                currentStateName = "ACTIVE"
+            case .inactive:
+                currentStateName = "INACTIVE"
+            case .background:
+                currentStateName = "BACKGROUND"
+            }
+            
+            let stringToLog = "Application moved from \(previousStateName) state to \(currentStateName) state: \(methodName)"
+            print(stringToLog)
         }
-        
-        switch UIApplication.shared.applicationState {
-        case .active:
-            currentStateName = "ACTIVE"
-        case .inactive:
-            currentStateName = "INACTIVE"
-        case .background:
-            currentStateName = "BACKGROUND"
-        }
-        
-        let stringToLog = "Application moved from \(previousStateName) state to \(currentStateName) state: \(methodName)"
-        print(stringToLog)
     }
     
     static func logViewControllerMethod(_ methodName: String) {
-        let stringToLog = "View Controller's called method is \(methodName)"
-        print(stringToLog)
+        if logToggle {
+            let stringToLog = "View Controller's called method is \(methodName)"
+            print(stringToLog)
+        }
     }
 }
