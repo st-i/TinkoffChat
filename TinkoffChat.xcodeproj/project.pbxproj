@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0887DBC82160C2F500D0150C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0887DBC72160C2F500D0150C /* ProfileViewController.swift */; };
+		0887DBCA2160C31800D0150C /* ProfileStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0887DBC92160C31800D0150C /* ProfileStoryboard.storyboard */; };
 		DD42D89B21554A0500B88B81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD42D89A21554A0500B88B81 /* AppDelegate.swift */; };
 		DD42D89D21554A0500B88B81 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD42D89C21554A0500B88B81 /* ViewController.swift */; };
 		DD42D8A021554A0500B88B81 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD42D89E21554A0500B88B81 /* Main.storyboard */; };
@@ -17,6 +19,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0887DBC72160C2F500D0150C /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		0887DBC92160C31800D0150C /* ProfileStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProfileStoryboard.storyboard; sourceTree = "<group>"; };
 		DD42D89721554A0500B88B81 /* TinkoffChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinkoffChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD42D89A21554A0500B88B81 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DD42D89C21554A0500B88B81 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -39,6 +43,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0887DBC42160C27200D0150C /* Presentation Layer */ = {
+			isa = PBXGroup;
+			children = (
+				0887DBC52160C2A500D0150C /* ProfileModule */,
+			);
+			path = "Presentation Layer";
+			sourceTree = "<group>";
+		};
+		0887DBC52160C2A500D0150C /* ProfileModule */ = {
+			isa = PBXGroup;
+			children = (
+				0887DBC62160C2D900D0150C /* View */,
+			);
+			path = ProfileModule;
+			sourceTree = "<group>";
+		};
+		0887DBC62160C2D900D0150C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0887DBC92160C31800D0150C /* ProfileStoryboard.storyboard */,
+				0887DBC72160C2F500D0150C /* ProfileViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		DD42D88E21554A0500B88B81 = {
 			isa = PBXGroup;
 			children = (
@@ -58,6 +87,7 @@
 		DD42D89921554A0500B88B81 /* TinkoffChat */ = {
 			isa = PBXGroup;
 			children = (
+				0887DBC42160C27200D0150C /* Presentation Layer */,
 				DD42D8AC215679FB00B88B81 /* Helpers */,
 				DD42D89A21554A0500B88B81 /* AppDelegate.swift */,
 				DD42D89C21554A0500B88B81 /* ViewController.swift */,
@@ -110,6 +140,7 @@
 				TargetAttributes = {
 					DD42D89621554A0500B88B81 = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 					};
 				};
 			};
@@ -137,6 +168,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DD42D8A521554A0800B88B81 /* LaunchScreen.storyboard in Resources */,
+				0887DBCA2160C31800D0150C /* ProfileStoryboard.storyboard in Resources */,
 				DD42D8A221554A0800B88B81 /* Assets.xcassets in Resources */,
 				DD42D8A021554A0500B88B81 /* Main.storyboard in Resources */,
 			);
@@ -151,6 +183,7 @@
 			files = (
 				DD42D8B02156B26C00B88B81 /* HelperViewController.swift in Sources */,
 				DD42D89D21554A0500B88B81 /* ViewController.swift in Sources */,
+				0887DBC82160C2F500D0150C /* ProfileViewController.swift in Sources */,
 				DD42D8AE21567A1700B88B81 /* Logger.swift in Sources */,
 				DD42D89B21554A0500B88B81 /* AppDelegate.swift in Sources */,
 			);
@@ -299,14 +332,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 47SH5K5922;
 				INFOPLIST_FILE = TinkoffChat/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = stefanov.TinkoffChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -318,14 +351,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 47SH5K5922;
 				INFOPLIST_FILE = TinkoffChat/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = stefanov.TinkoffChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
