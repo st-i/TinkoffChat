@@ -29,6 +29,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         print("Свойство \'frame\' кнопки \'Редактировать\' в методе viewDidLoad: \(editButton.frame)")
+        navigationItem.title = "Profile"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(dismissViewController))
         setupUserInterface()
         imagePickerController.delegate = self
     }
@@ -67,6 +69,10 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     @objc func chooseProfileImage() {
         print("Выбери изображение профиля")
         showGetPhotoActionSheet()
+    }
+    
+    @objc func dismissViewController() {
+        dismiss(animated: true, completion: nil)
     }
     
     //MARK: - UIAlertController
