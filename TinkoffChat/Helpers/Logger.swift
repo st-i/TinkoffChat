@@ -55,4 +55,8 @@ class Logger: NSObject {
             print(stringToLog)
         }
     }
+    
+    static func logAppThemeColor(_ selectedColor: UIColor) {
+        print(selectedColor)
+    }
 }

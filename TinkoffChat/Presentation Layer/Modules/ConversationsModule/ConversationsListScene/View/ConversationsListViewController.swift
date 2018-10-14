@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ConversationsListViewController: UIViewController {
+class ConversationsListViewController: UIViewController, ​ThemesViewControllerDelegate {
     
     @IBOutlet weak var conversationsTableView: UITableView!
     var conversationsDisplayModels: [ConversationDisplayModel]?
@@ -26,10 +26,34 @@ class ConversationsListViewController: UIViewController {
         conversationsTableView.delegate = self
     }
     
+    //MARK: - Actions
+    
+    @IBAction func openThemesViewController(_ sender: UIBarButtonItem) {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "ThemesStoryboard", bundle: nil)
+        let themesViewController = storyBoard.instantiateViewController(withIdentifier: "ThemesViewController") as! ThemesViewController
+        themesViewController.themesDelegate = self
+        let navController = UINavigationController(rootViewController: themesViewController)
+        present(navController, animated: true, completion: nil)
+    }
+    
     @objc func openProfileViewController() {
         let storyBoard: UIStoryboard = UIStoryboard(name: "ProfileStoryboard", bundle: nil)
         let profileViewController = storyBoard.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
         let navController = UINavigationController(rootViewController: profileViewController)
         present(navController, animated: true, completion: nil)
+    }
+    
+    func logThemeChanging(selectedTheme: UIColor) {
+        Logger.logAppThemeColor(selectedTheme)
+    }
+    
+    //MARK: - ThemesViewControllerDelegate
+    
+    func themesViewController(_ controller: ThemesViewController, didSelectTheme selectedTheme: UIColor) {
+        logThemeChanging(selectedTheme: selectedTheme)
+        UINavigationBar.appearance().backgroundColor = selectedTheme
+        UINavigationBar.appearance().barTintColor = selectedTheme
+
+        UserDefaults.standard.set(selectedTheme, forKey: "appTheme")
     }
 }

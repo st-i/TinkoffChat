@@ -92,7 +92,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="nam-bW-BL8"/>
                     </view>
-                    <navigationItem key="navigationItem" id="m5V-Pz-fdi"/>
+                    <navigationItem key="navigationItem" id="m5V-Pz-fdi">
+                        <barButtonItem key="leftBarButtonItem" title="Themes" id="yzP-fq-vJ1">
+                            <connections>
+                                <action selector="openThemesViewController:" destination="ZuV-V1-BGM" id="HvY-2e-ySV"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="conversationsTableView" destination="1S3-KA-Si4" id="93d-UV-JlG"/>
                     </connections>
