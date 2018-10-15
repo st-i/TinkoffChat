@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
     Themes *_model;
 }
 
-@property (weak, nonatomic) id<​ThemesViewControllerDelegate>themesDelegate;
+@property (assign, nonatomic) id<​ThemesViewControllerDelegate>themesDelegate;
 @property (retain, nonatomic) Themes *model;
 
 @end

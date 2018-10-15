@@ -12,9 +12,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface Themes : NSObject {
-    UIColor *theme1;
-    UIColor *theme2;
-    UIColor *theme3;
+    UIColor *_theme1;
+    UIColor *_theme2;
+    UIColor *_theme3;
 }
 
 @property (retain, nonatomic) UIColor *theme1;

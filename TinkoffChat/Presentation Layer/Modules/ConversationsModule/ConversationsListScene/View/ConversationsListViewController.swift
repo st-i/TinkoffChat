@@ -53,7 +53,14 @@ class ConversationsListViewController: UIViewController, ​ThemesViewController
         logThemeChanging(selectedTheme: selectedTheme)
         UINavigationBar.appearance().backgroundColor = selectedTheme
         UINavigationBar.appearance().barTintColor = selectedTheme
-
-        UserDefaults.standard.set(selectedTheme, forKey: "appTheme")
+        controller.view.backgroundColor = selectedTheme
+        controller.navigationController?.navigationBar.barTintColor = selectedTheme
+        
+        do {
+            try UserDefaults.standard.set(NSKeyedArchiver.archivedData(withRootObject: selectedTheme, requiringSecureCoding: false), forKey: "appTheme")
+        } catch {
+            print("Can't save app theme")
+        }
+        
     }
 }

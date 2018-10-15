@@ -18,7 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIColor *theme1 = [UIColor lightGrayColor];
+    UIColor *theme1 = [UIColor whiteColor];
     UIColor *theme2 = [UIColor darkGrayColor];
     UIColor *theme3 = [UIColor colorWithRed:252.0/255.0 green:252.0/255.0 blue:238.0/255.0 alpha:1.0];
     _model = [[Themes alloc]init];
@@ -26,7 +26,7 @@
     _model.theme2 = theme2;
     _model.theme3 = theme3;
     
-    [theme3 release];
+    [theme3 release]; //если закомментировать, перестает падать; все работает, но, вроде, начинает сжирать память
 }
 
 - (void)viewWillAppear:(BOOL)animated {
