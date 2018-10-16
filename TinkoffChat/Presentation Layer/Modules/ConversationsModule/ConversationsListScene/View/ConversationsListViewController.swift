@@ -30,9 +30,20 @@ class ConversationsListViewController: UIViewController, ​ThemesViewController
     
     @IBAction func openThemesViewController(_ sender: UIBarButtonItem) {
         let storyBoard: UIStoryboard = UIStoryboard(name: "ThemesStoryboard", bundle: nil)
-        let themesViewController = storyBoard.instantiateViewController(withIdentifier: "ThemesViewController") as! ThemesViewController
-        themesViewController.themesDelegate = self
-        let navController = UINavigationController(rootViewController: themesViewController)
+        let themesViewController = storyBoard.instantiateViewController(withIdentifier: "ThemesViewController") as? ThemesViewController
+        
+        //Для VC на Objective-C
+        themesViewController!.themesDelegate = self
+        
+        //Для VC на Swift'е
+//        themesViewController.didSelectThemeClosure = { [unowned self] (selectedTheme) in
+//            if let _selectedTheme = selectedTheme {
+//                self.logThemeChanging(selectedTheme: _selectedTheme)
+//                self.setupNewAppTheme(selectedTheme: _selectedTheme, controller: themesViewController)
+//            }
+//        }
+        
+        let navController = UINavigationController(rootViewController: themesViewController!)
         present(navController, animated: true, completion: nil)
     }
     
@@ -47,10 +58,7 @@ class ConversationsListViewController: UIViewController, ​ThemesViewController
         Logger.logAppThemeColor(selectedTheme)
     }
     
-    //MARK: - ThemesViewControllerDelegate
-    
-    func themesViewController(_ controller: ThemesViewController, didSelectTheme selectedTheme: UIColor) {
-        logThemeChanging(selectedTheme: selectedTheme)
+    func setupNewAppTheme(selectedTheme: UIColor, controller: ThemesViewController) {
         UINavigationBar.appearance().backgroundColor = selectedTheme
         UINavigationBar.appearance().barTintColor = selectedTheme
         controller.view.backgroundColor = selectedTheme
@@ -61,6 +69,12 @@ class ConversationsListViewController: UIViewController, ​ThemesViewController
         } catch {
             print("Can't save app theme")
         }
-        
+    }
+    
+    //MARK: - ThemesViewControllerDelegate
+    
+    func themesViewController(_ controller: ThemesViewController, didSelectTheme selectedTheme: UIColor) {
+        logThemeChanging(selectedTheme: selectedTheme)
+        setupNewAppTheme(selectedTheme: selectedTheme, controller: controller)
     }
 }

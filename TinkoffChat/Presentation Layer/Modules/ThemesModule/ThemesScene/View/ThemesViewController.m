@@ -9,6 +9,14 @@
 #import "ThemesViewController.h"
 #import "ThemesViewControllerDelegate.h"
 
+/*
+ Чтобы использовать VC на Objective-C:
+ 1. Поставить галочку в таргете
+ 2. Раскомментировать код для themesDelegate в ConversationsListViewController
+ 3. Убрать галочку "Inherit module from target" в ThemesStoryboard
+ 4. Раскомментировать #import "ThemesViewController.h" в Bridging-Header
+ */
+
 @interface ThemesViewController ()
 
 @end
@@ -20,13 +28,11 @@
     
     UIColor *theme1 = [UIColor whiteColor];
     UIColor *theme2 = [UIColor darkGrayColor];
-    UIColor *theme3 = [UIColor colorWithRed:252.0/255.0 green:252.0/255.0 blue:238.0/255.0 alpha:1.0];
+    UIColor *theme3 = [UIColor yellowColor];
     _model = [[Themes alloc]init];
     _model.theme1 = theme1;
     _model.theme2 = theme2;
-    _model.theme3 = theme3;
-    
-    [theme3 release]; //если закомментировать, перестает падать; все работает, но, вроде, начинает сжирать память
+    _model.theme3 = theme3;    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
