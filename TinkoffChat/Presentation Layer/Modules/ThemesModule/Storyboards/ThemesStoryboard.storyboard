@@ -12,7 +12,7 @@
         <!--Themes View Controller-->
         <scene sceneID="40a-5h-Zxf">
             <objects>
-                <viewController storyboardIdentifier="ThemesViewController" id="wVK-zr-Ae5" customClass="ThemesViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ThemesViewController" id="wVK-zr-Ae5" customClass="ThemesViewController" customModule="TinkoffChat" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2c6-oB-uAs">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

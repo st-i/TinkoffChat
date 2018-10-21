@@ -13,10 +13,14 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBOutlet weak var userPhotoImageView: UIImageView!
     @IBOutlet weak var photoButton: UIButton!
     @IBOutlet weak var photoButtonImageView: UIImageView!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var descriptionLabel: UILabel!
+//    @IBOutlet weak var nameLabel: UILabel!
+//    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet var userNameTextField: UITextField!
+    @IBOutlet var aboutMeTextView: UITextView!
     @IBOutlet weak var editButton: UIButton!
-    
+    @IBOutlet weak var gcdButton: UIButton!
+    @IBOutlet weak var operationButton: UIButton!
+
     var imagePickerController = UIImagePickerController()
     
     required init?(coder aDecoder: NSCoder) {
@@ -31,7 +35,13 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         print("Свойство \'frame\' кнопки \'Редактировать\' в методе viewDidLoad: \(editButton.frame)")
         navigationItem.title = "Profile"
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(dismissViewController))
-        setupUserInterface()
+        gcdButton.isHidden = true
+        operationButton.isHidden = true
+        
+        userNameTextField.isEnabled = false
+        userNameTextField.delegate = self
+        aboutMeTextView.isUserInteractionEnabled = false
+        aboutMeTextView.delegate = self
         imagePickerController.delegate = self
     }
     
@@ -41,7 +51,12 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
 //        Frame отличается, потому что во viewDidAppear view уже находится во view hierarchy, в то время как во viewDidLoad - нет
     }
     
-    //MARK: - UI Initial Setup
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        setupUserInterface()
+    }
+    
+    //MARK: - UI Setup
     
     private func setupUserInterface() {
         userPhotoImageView.layer.cornerRadius = photoButton.frame.width / 2
@@ -53,26 +68,68 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         
         photoButtonImageView.image = UIImage(named: "slr-camera-2-xxl")
 
-        descriptionLabel.textColor = UIColor.lightGray
+//        descriptionLabel.textColor = UIColor.lightGray
         
-        editButton.layer.cornerRadius = 15
-        editButton.layer.borderWidth = 2
-        editButton.layer.borderColor = UIColor.black.cgColor
-        editButton.setTitle("Редактировать", for: .normal)
-        editButton.setTitleColor(UIColor.black, for: .normal)
-        editButton.setTitleColor(UIColor.groupTableViewBackground, for: .selected)
-        editButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
+        aboutMeTextView.layer.cornerRadius = 15
+        
+        setupButton(editButton, "Редактировать")
+        setupButton(gcdButton, "GCD")
+        setupButton(operationButton, "Operation")
+    }
+    
+    private func setupButton(_ button: UIButton, _ title: String) {
+        button.layer.cornerRadius = 15
+        button.layer.borderWidth = 2
+        button.layer.borderColor = UIColor.black.cgColor
+        button.setTitle(title, for: .normal)
+        button.setTitleColor(UIColor.black, for: .normal)
+        button.setTitleColor(UIColor.groupTableViewBackground, for: .selected)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 20)
+    }
+    
+    private func finishInfoEditing() {
+        if userNameTextField.isFirstResponder {
+            userNameTextField.resignFirstResponder()
+        }
+        if aboutMeTextView.isFirstResponder {
+            aboutMeTextView.resignFirstResponder()
+        }
+        userNameTextField.isEnabled = false
+        aboutMeTextView.isUserInteractionEnabled = false
+        view.frame.origin.y += 250
+        editButton.isHidden = false
+        gcdButton.isHidden = true
+        operationButton.isHidden = true
     }
     
     //MARK: - Button Action
+    
+    @objc func dismissViewController() {
+        dismiss(animated: true, completion: nil)
+    }
     
     @objc func chooseProfileImage() {
         print("Выбери изображение профиля")
         showGetPhotoActionSheet()
     }
     
-    @objc func dismissViewController() {
-        dismiss(animated: true, completion: nil)
+    @IBAction func editProfileAction(_ sender: Any) {
+        //better to find keyboard height with the help of UIKeyboardDidShowNotification
+        userNameTextField.isEnabled = true
+        aboutMeTextView.isUserInteractionEnabled = true
+        userNameTextField.becomeFirstResponder()
+        view.frame.origin.y -= 250
+        editButton.isHidden = true
+        gcdButton.isHidden = false
+        operationButton.isHidden = false
+    }
+    
+    @IBAction func saveWithGCDAction(_ sender: Any) {
+        finishInfoEditing()
+    }
+    
+    @IBAction func saveWithOperationAction(_ sender: Any) {
+        finishInfoEditing()
     }
     
     //MARK: - UIAlertController
