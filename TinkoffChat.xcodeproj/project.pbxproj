@@ -11,6 +11,10 @@
 		0801C771217CA86800BEB66E /* ThemesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0801C76B2176627700BEB66E /* ThemesViewController.swift */; };
 		0801C773217CCD1C00BEB66E /* ProfileTextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0801C772217CCD1C00BEB66E /* ProfileTextFieldDelegate.swift */; };
 		0801C775217CCD8400BEB66E /* ProfileTextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0801C774217CCD8400BEB66E /* ProfileTextViewDelegate.swift */; };
+		0801C778217E406800BEB66E /* GCDDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0801C777217E406800BEB66E /* GCDDataManager.swift */; };
+		0801C77A217E407900BEB66E /* OperationDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0801C779217E407900BEB66E /* OperationDataManager.swift */; };
+		0801C77C217E409900BEB66E /* UserDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0801C77B217E409900BEB66E /* UserDataService.swift */; };
+		0801C77E217E40EE00BEB66E /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0801C77D217E40EE00BEB66E /* UserModel.swift */; };
 		0887DBC82160C2F500D0150C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0887DBC72160C2F500D0150C /* ProfileViewController.swift */; };
 		0887DBCA2160C31800D0150C /* ProfileStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0887DBC92160C31800D0150C /* ProfileStoryboard.storyboard */; };
 		0887DBD32168B85500D0150C /* ConversationsStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0887DBD22168B85500D0150C /* ConversationsStoryboard.storyboard */; };
@@ -39,6 +43,10 @@
 		0801C76B2176627700BEB66E /* ThemesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesViewController.swift; sourceTree = "<group>"; };
 		0801C772217CCD1C00BEB66E /* ProfileTextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTextFieldDelegate.swift; sourceTree = "<group>"; };
 		0801C774217CCD8400BEB66E /* ProfileTextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTextViewDelegate.swift; sourceTree = "<group>"; };
+		0801C777217E406800BEB66E /* GCDDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDDataManager.swift; sourceTree = "<group>"; };
+		0801C779217E407900BEB66E /* OperationDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationDataManager.swift; sourceTree = "<group>"; };
+		0801C77B217E409900BEB66E /* UserDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataService.swift; sourceTree = "<group>"; };
+		0801C77D217E40EE00BEB66E /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		0887DBC72160C2F500D0150C /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		0887DBC92160C31800D0150C /* ProfileStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProfileStoryboard.storyboard; sourceTree = "<group>"; };
 		0887DBD22168B85500D0150C /* ConversationsStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ConversationsStoryboard.storyboard; sourceTree = "<group>"; };
@@ -94,6 +102,16 @@
 				0801C76B2176627700BEB66E /* ThemesViewController.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		0801C776217E403200BEB66E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				0801C777217E406800BEB66E /* GCDDataManager.swift */,
+				0801C779217E407900BEB66E /* OperationDataManager.swift */,
+				0801C77B217E409900BEB66E /* UserDataService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		0887DBC42160C27200D0150C /* Presentation Layer */ = {
@@ -226,6 +244,7 @@
 			isa = PBXGroup;
 			children = (
 				08C538EA217334D200DBADC6 /* Models */,
+				0801C776217E403200BEB66E /* Services */,
 			);
 			path = ServiceLayer;
 			sourceTree = "<group>";
@@ -235,6 +254,7 @@
 			children = (
 				08C538F221738E7900DBADC6 /* Themes.h */,
 				0801C7672173C2BA00BEB66E /* Themes.m */,
+				0801C77D217E40EE00BEB66E /* UserModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -395,20 +415,24 @@
 			files = (
 				0801C775217CCD8400BEB66E /* ProfileTextViewDelegate.swift in Sources */,
 				DD42D8B02156B26C00B88B81 /* HelperViewController.swift in Sources */,
+				0801C778217E406800BEB66E /* GCDDataManager.swift in Sources */,
 				0887DBE0216909A100D0150C /* ConversationCell.swift in Sources */,
 				DD42D89D21554A0500B88B81 /* ViewController.swift in Sources */,
 				0887DBDA2169076D00D0150C /* ConversationsListDataSource.swift in Sources */,
 				0801C771217CA86800BEB66E /* ThemesViewController.swift in Sources */,
 				0887DBDC2169078000D0150C /* ConversationsListDelegate.swift in Sources */,
+				0801C77E217E40EE00BEB66E /* UserModel.swift in Sources */,
 				0801C773217CCD1C00BEB66E /* ProfileTextFieldDelegate.swift in Sources */,
 				0887DBE7216A16D700D0150C /* ConversationDataSource.swift in Sources */,
 				0801C7682173C2BA00BEB66E /* Themes.m in Sources */,
 				0887DBEB216A170D00D0150C /* ConversationInteractor.swift in Sources */,
 				0887DBC82160C2F500D0150C /* ProfileViewController.swift in Sources */,
 				DD42D8AE21567A1700B88B81 /* Logger.swift in Sources */,
+				0801C77C217E409900BEB66E /* UserDataService.swift in Sources */,
 				0887DBD82168BDCA00D0150C /* ConversationsListViewController.swift in Sources */,
 				0887DBED216A1BA000D0150C /* MessageCell.swift in Sources */,
 				DD42D89B21554A0500B88B81 /* AppDelegate.swift in Sources */,
+				0801C77A217E407900BEB66E /* OperationDataManager.swift in Sources */,
 				0887DBEF216A4BBF00D0150C /* DatesHelper.swift in Sources */,
 				0887DBE5216A15DB00D0150C /* ConversationViewController.swift in Sources */,
 				0887DBDE216907F600D0150C /* ConversationsListInteractor.swift in Sources */,
