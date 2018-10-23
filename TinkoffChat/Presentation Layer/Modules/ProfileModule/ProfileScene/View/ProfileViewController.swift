@@ -23,6 +23,9 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
 
     var imagePickerController = UIImagePickerController()
     
+    var gcdDataManager: UserDataInteractionProtocol?
+    var operationDataManager: UserDataInteractionProtocol?
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
 //        print("Свойство \'frame\' кнопки \'Редактировать\' в методе init: \(editButton.frame)")
@@ -43,6 +46,9 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         aboutMeTextView.isUserInteractionEnabled = false
         aboutMeTextView.delegate = self
         imagePickerController.delegate = self
+        
+        setupSavingManagers()
+        loadAndShowUserData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -56,19 +62,16 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         setupUserInterface()
     }
     
-    //MARK: - UI Setup
+    //MARK: - Initial Setup
     
     private func setupUserInterface() {
         userPhotoImageView.layer.cornerRadius = photoButton.frame.width / 2
         userPhotoImageView.clipsToBounds = true
-        userPhotoImageView.image = UIImage(named: "placeholder-user")
         
         photoButton.layer.cornerRadius = photoButton.frame.width / 2
         photoButton.addTarget(self, action: #selector(chooseProfileImage), for: .touchUpInside)
         
         photoButtonImageView.image = UIImage(named: "slr-camera-2-xxl")
-
-//        descriptionLabel.textColor = UIColor.lightGray
         
         aboutMeTextView.layer.cornerRadius = 15
         
@@ -87,22 +90,13 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         button.titleLabel?.font = UIFont.systemFont(ofSize: 20)
     }
     
-    private func finishInfoEditing() {
-        if userNameTextField.isFirstResponder {
-            userNameTextField.resignFirstResponder()
-        }
-        if aboutMeTextView.isFirstResponder {
-            aboutMeTextView.resignFirstResponder()
-        }
-        userNameTextField.isEnabled = false
-        aboutMeTextView.isUserInteractionEnabled = false
-        view.frame.origin.y += 250
-        editButton.isHidden = false
-        gcdButton.isHidden = true
-        operationButton.isHidden = true
+    private func setupSavingManagers() {
+        let userDataService = UserDataService()
+        gcdDataManager = GCDDataManager.init(userDataService: userDataService)
+        operationDataManager = OperationDataManager.init(userDataService: userDataService)
     }
     
-    //MARK: - Button Action
+    //MARK: - Button Actions
     
     @objc func dismissViewController() {
         dismiss(animated: true, completion: nil)
@@ -115,6 +109,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     @IBAction func editProfileAction(_ sender: Any) {
         //better to find keyboard height with the help of UIKeyboardDidShowNotification
+        photoButton.isEnabled = false
         userNameTextField.isEnabled = true
         aboutMeTextView.isUserInteractionEnabled = true
         userNameTextField.becomeFirstResponder()
@@ -125,11 +120,68 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     @IBAction func saveWithGCDAction(_ sender: Any) {
-        finishInfoEditing()
+        saveUserData(dataManager: gcdDataManager)
     }
     
     @IBAction func saveWithOperationAction(_ sender: Any) {
-        finishInfoEditing()
+        saveUserData(dataManager: operationDataManager)
+    }
+    
+    private func saveUserData(dataManager: UserDataInteractionProtocol?) {
+        let activityIndicator = UIActivityIndicatorView(style: .gray)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: activityIndicator)
+        activityIndicator.startAnimating()
+        
+        let userModel = UserModel()
+        userModel.userName = userNameTextField.text
+        userModel.infoAboutUser = aboutMeTextView.text
+        userModel.userPhoto = userPhotoImageView.image
+        
+        dataManager?.saveUserData(userModel, completion: { (wasSaved) in
+            activityIndicator.stopAnimating()
+            self.navigationItem.rightBarButtonItem = nil
+            self.view.isUserInteractionEnabled = true
+            if wasSaved {
+                let alert = UIAlertController(title: "Данные сохранены", message: nil, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                self.present(alert, animated: true, completion: nil)
+            }else{
+                let alert = UIAlertController(title: "Ошибка", message: "Не удалось сохранить данные", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                alert.addAction(UIAlertAction(title: "Повторить", style: .cancel) { (action: UIAlertAction) in
+                    self.saveUserData(dataManager: dataManager)
+                })
+                self.present(alert, animated: true, completion: nil)
+            }
+        })
+        
+        photoButton.isEnabled = true
+        if userNameTextField.isFirstResponder {
+            userNameTextField.resignFirstResponder()
+        }
+        if aboutMeTextView.isFirstResponder {
+            aboutMeTextView.resignFirstResponder()
+        }
+        userNameTextField.isEnabled = false
+        aboutMeTextView.isUserInteractionEnabled = false
+        view.frame.origin.y += 250
+        editButton.isHidden = false
+        gcdButton.isHidden = true
+        operationButton.isHidden = true
+        view.isUserInteractionEnabled = false
+    }
+    
+    private func loadAndShowUserData() {
+        gcdDataManager?.loadUserData(completion: { (userModel) in
+            self.userNameTextField.text = userModel.userName
+            self.aboutMeTextView.text = userModel.infoAboutUser
+            
+            if let image = userModel.userPhoto {
+                self.userPhotoImageView.image = image
+            } else {
+                self.userPhotoImageView.image = UIImage(named: "placeholder-user")
+            }
+        })
     }
     
     //MARK: - UIAlertController
@@ -169,6 +221,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             userPhotoImageView.contentMode = .scaleToFill
             userPhotoImageView.image = pickedImage
+            saveUserData(dataManager: gcdDataManager)
         }
         picker.dismiss(animated: true, completion: nil)
     }
