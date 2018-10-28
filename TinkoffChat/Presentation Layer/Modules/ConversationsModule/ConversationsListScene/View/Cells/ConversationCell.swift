@@ -70,12 +70,16 @@ extension ConversationCell: ConversationCellConfiguration {
         set (newDate) {
             let formatter = DateFormatter()
             let currentDayBeginningDate = DatesHelper.dateOfCurrentDayBeginning()
-            if newDate! < currentDayBeginningDate {
-                formatter.dateFormat = "dd MMM"
+            if let newUnwrappedDate = newDate {
+                if newUnwrappedDate < currentDayBeginningDate {
+                    formatter.dateFormat = "dd MMM"
+                }else{
+                    formatter.dateFormat = "HH:mm"
+                }
+                dateLabel.text = formatter.string(from: newUnwrappedDate)
             }else{
-                formatter.dateFormat = "HH:mm"
+                dateLabel.text = nil
             }
-            dateLabel.text = formatter.string(from: newDate!)
         }
     }
     

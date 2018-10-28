@@ -8,22 +8,58 @@
 
 import UIKit
 
-class ConversationsListViewController: UIViewController, ​ThemesViewControllerDelegate {
-    
+class ConversationsListViewController: UIViewController, ​ThemesViewControllerDelegate, ConversationsCommunicatorProtocol {
+
     @IBOutlet weak var conversationsTableView: UITableView!
-    var conversationsDisplayModels: [ConversationDisplayModel]?
+//    var conversationsDisplayModels: [ConversationDisplayModel]?
+    var onlineConversationsModels: [ConversationModel] = []
+    var communicationManager: CommunicationManager?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Tinkoff Chat"
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Profile", style: .plain, target: self, action: #selector(openProfileViewController))
-        conversationsDisplayModels = ConversationsListInteractor.createDisplayModels()
+//        conversationsDisplayModels = ConversationsListInteractor.createDisplayModels()
         setupTableView()
+        communicationManager = CommunicationManager()
+        communicationManager?.conversationsDelegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        DispatchQueue.main.async {
+            self.conversationsTableView.reloadData()
+        }
     }
     
     private func setupTableView() {
         conversationsTableView.dataSource = self
         conversationsTableView.delegate = self
+        setupTableViewHeader()
+    }
+    
+    private func setupTableViewHeader() {
+        if onlineConversationsModels.count == 0 {
+            let headerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 70))
+            let indicatorView = UIActivityIndicatorView(style: .gray)
+            indicatorView.center = headerView.center
+            indicatorView.startAnimating()
+            let hintLabel = UILabel(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width - 30, height: 26))
+            hintLabel.font = UIFont.systemFont(ofSize: 15, weight: .light)
+            hintLabel.textAlignment = .center
+            hintLabel.center = CGPoint(x: indicatorView.center.x, y: indicatorView.center.y + 25)
+            hintLabel.text = "Looking for online users"
+            hintLabel.textColor = UIColor.lightGray
+            headerView.addSubview(indicatorView)
+            headerView.addSubview(hintLabel)
+            conversationsTableView.tableHeaderView = headerView
+            conversationsTableView.separatorStyle = .none
+        }else{
+            DispatchQueue.main.async {
+                self.conversationsTableView.tableHeaderView = nil
+                self.conversationsTableView.separatorStyle = .singleLine
+            }
+        }
     }
     
     //MARK: - Actions
@@ -71,10 +107,30 @@ class ConversationsListViewController: UIViewController, ​ThemesViewController
         }
     }
     
+    private func sortConversationsByOnlineParameter(unsortedConversations: [ConversationModel]) {
+        var onlineConversations = [ConversationModel]()
+        for conversationModel in unsortedConversations {
+            if conversationModel.isOnline {
+                onlineConversations.append(conversationModel)
+            }
+        }
+        onlineConversationsModels = onlineConversations
+    }
+    
     //MARK: - ThemesViewControllerDelegate
     
     func themesViewController(_ controller: ThemesViewController, didSelectTheme selectedTheme: UIColor) {
         logThemeChanging(selectedTheme: selectedTheme)
         setupNewAppTheme(selectedTheme: selectedTheme, controller: controller)
+    }
+    
+    //MARK: - ConversationsCommunicatorProtocol
+    
+    func conversationsDidUpdate(conversations: [ConversationModel]) {
+        sortConversationsByOnlineParameter(unsortedConversations: conversations)
+        setupTableViewHeader()
+        DispatchQueue.main.async {
+            self.conversationsTableView.reloadData()
+        }
     }
 }

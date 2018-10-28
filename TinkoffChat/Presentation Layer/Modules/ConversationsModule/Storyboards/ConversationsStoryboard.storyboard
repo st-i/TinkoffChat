@@ -116,7 +116,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7xW-Jw-mtR">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="597"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="incomingMessageCell" id="pLR-eU-eCz" customClass="MessageCell" customModule="TinkoffChat" customModuleProvider="target">
@@ -173,19 +173,48 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Message" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="KTC-MX-GUc">
+                                <rect key="frame" x="10" y="627" width="305" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                <connections>
+                                    <outlet property="delegate" destination="iif-Ks-llL" id="CC8-Ov-BeT"/>
+                                </connections>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0h3-Y9-RFZ">
+                                <rect key="frame" x="315" y="627" width="60" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="4r0-be-PYr"/>
+                                    <constraint firstAttribute="height" constant="30" id="P5A-7A-R5h"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <state key="normal" title="Send"/>
+                                <connections>
+                                    <action selector="sendMessageAction:" destination="iif-Ks-llL" eventType="touchUpInside" id="sS5-XG-zz0"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="vlb-ga-D9n" firstAttribute="bottom" secondItem="KTC-MX-GUc" secondAttribute="bottom" constant="10" id="6cj-ix-fg4"/>
+                            <constraint firstItem="KTC-MX-GUc" firstAttribute="leading" secondItem="vlb-ga-D9n" secondAttribute="leading" constant="10" id="9Vt-iE-xTu"/>
                             <constraint firstItem="7xW-Jw-mtR" firstAttribute="leading" secondItem="vlb-ga-D9n" secondAttribute="leading" id="Pcs-iA-N4y"/>
-                            <constraint firstItem="vlb-ga-D9n" firstAttribute="bottom" secondItem="7xW-Jw-mtR" secondAttribute="bottom" id="SQD-YR-gY5"/>
+                            <constraint firstItem="0h3-Y9-RFZ" firstAttribute="trailing" secondItem="vlb-ga-D9n" secondAttribute="trailing" id="Qj0-t9-lsP"/>
+                            <constraint firstItem="KTC-MX-GUc" firstAttribute="top" secondItem="7xW-Jw-mtR" secondAttribute="bottom" constant="10" id="SIH-6Z-qnS"/>
                             <constraint firstItem="vlb-ga-D9n" firstAttribute="trailing" secondItem="7xW-Jw-mtR" secondAttribute="trailing" id="UNZ-dm-3yE"/>
+                            <constraint firstItem="0h3-Y9-RFZ" firstAttribute="centerY" secondItem="KTC-MX-GUc" secondAttribute="centerY" id="YIt-aB-dgd"/>
                             <constraint firstItem="7xW-Jw-mtR" firstAttribute="top" secondItem="vlb-ga-D9n" secondAttribute="top" id="agS-GO-pPM"/>
+                            <constraint firstItem="0h3-Y9-RFZ" firstAttribute="leading" secondItem="KTC-MX-GUc" secondAttribute="trailing" id="uP5-al-Jag"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="vlb-ga-D9n"/>
                     </view>
                     <navigationItem key="navigationItem" id="rVI-e3-guz"/>
                     <connections>
                         <outlet property="conversationTableView" destination="7xW-Jw-mtR" id="YgY-Vg-g66"/>
+                        <outlet property="sendButon" destination="0h3-Y9-RFZ" id="Cyg-nY-eF9"/>
+                        <outlet property="textFieldBottomConstraint" destination="6cj-ix-fg4" id="Egc-A8-8d6"/>
+                        <outlet property="textInputTextField" destination="KTC-MX-GUc" id="oLM-G0-SaK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="om6-2d-8Mg" userLabel="First Responder" sceneMemberID="firstResponder"/>

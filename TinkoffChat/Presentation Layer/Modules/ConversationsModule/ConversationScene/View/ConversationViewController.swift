@@ -8,17 +8,24 @@
 
 import UIKit
 
-class ConversationViewController: UIViewController {
+class ConversationViewController: UIViewController, ConversationCommunicatorProtocol {
     
     @IBOutlet weak var conversationTableView: UITableView!
-    var displayModel: ConversationDisplayModel?
-    var conversationDisplayModels: [ConversationMessageDisplayModel]?
+    @IBOutlet var textInputTextField: UITextField!
+    @IBOutlet var sendButon: UIButton!
+    @IBOutlet var textFieldBottomConstraint: NSLayoutConstraint!
+//    var displayModel: ConversationDisplayModel?
+//    var conversationDisplayModels: [ConversationMessageDisplayModel]?
+    var currentConversation: ConversationModel?
+    var communicationManager: CommunicationManager?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = displayModel?.contactName
-        conversationDisplayModels = ConversationInteractor.createDisplayModels()
+//        navigationItem.title = displayModel?.contactName
+//        conversationDisplayModels = ConversationInteractor.createDisplayModels()
         setupTableView()
+        communicationManager = CommunicationManager()
+        communicationManager?.conversationDelegate = self
     }
     
     private func setupTableView() {
@@ -27,5 +34,41 @@ class ConversationViewController: UIViewController {
         conversationTableView.dataSource = self
         conversationTableView.estimatedRowHeight = 44.0
         conversationTableView.rowHeight = UITableView.automaticDimension
+    }
+    
+    @IBAction func sendMessageAction(_ sender: Any) {
+        hideKeyboard()
+        let newMessage = MessageModel(messageID: nil, text: textInputTextField.text, isIncoming: false, date: Date())
+        currentConversation?.messages?.append(newMessage)
+        DispatchQueue.main.async {
+            self.conversationTableView.reloadData()
+        }
+        communicationManager?.multipeerCommunicator?.sendMessage(string: textInputTextField.text!, to: (currentConversation?.userID)!, completionHandler: { (didSend, error) in
+            if !didSend {
+                if let unwrappedError = error {
+                    print("Message was not sent because of error: \(unwrappedError)")
+                }else{
+                    print("Message was not sent because of unknown error")
+                }
+            }else{
+                print("Message was successfully sent")
+            }
+            
+        })
+        textInputTextField.text = ""
+    }
+    
+    func hideKeyboard() {
+        textInputTextField.resignFirstResponder()
+        textFieldBottomConstraint.constant = 10
+    }
+    
+    //MARK: - ConversationCommunicatorProtocol
+    
+    func conversationDidUpdate(conversationMessages: [MessageModel]) {
+        currentConversation?.messages = conversationMessages
+        DispatchQueue.main.async {
+            self.conversationTableView.reloadData()
+        }
     }
 }
