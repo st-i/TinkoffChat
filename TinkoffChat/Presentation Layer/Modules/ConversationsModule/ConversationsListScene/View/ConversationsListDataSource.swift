@@ -29,7 +29,7 @@ extension ConversationsListViewController: UITableViewDataSource {
         let displayModel = onlineConversationsModels[indexPath.row]
         cell.name = displayModel.userName
         cell.message = displayModel.messages?.last?.text
-        cell.date = displayModel.lastMessageDate
+        cell.date = displayModel.messages?.last?.date
         cell.online = displayModel.isOnline
         cell.hasUnreadMessages = displayModel.hasUnreadMessages
         return cell

@@ -13,16 +13,14 @@ class ConversationModel: NSObject {
     var messages: [MessageModel]?
     var userID: String?
     var message: String?
-    var lastMessageDate: Date?
     var isOnline: Bool
     var hasUnreadMessages: Bool
     
-    init(userName: String?, messages: [MessageModel]?, userID: String, message: String?, lastMessageDate: Date?, isOnline: Bool, hasUnreadMessages: Bool) {
+    init(userName: String?, messages: [MessageModel]?, userID: String, message: String?, isOnline: Bool, hasUnreadMessages: Bool) {
         self.userName = userName
         self.messages = messages
         self.userID = userID
         self.message = message
-        self.lastMessageDate = lastMessageDate
         self.isOnline = isOnline
         self.hasUnreadMessages = hasUnreadMessages
     }

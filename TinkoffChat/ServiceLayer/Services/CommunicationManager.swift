@@ -14,6 +14,7 @@ protocol ConversationsCommunicatorProtocol: class {
 
 protocol ConversationCommunicatorProtocol {
     func conversationDidUpdate(conversationMessages: [MessageModel])
+    func userDidChangeState(isOnline: Bool)
 }
 
 class CommunicationManager: NSObject, CommunicatorDelegate {
@@ -32,11 +33,11 @@ class CommunicationManager: NSObject, CommunicatorDelegate {
         if let conversation = conversations.first(where: {$0.userID == userID}) {
             conversation.isOnline = true
         } else {
-            let conversation = ConversationModel(userName: userName, messages: [], userID: userID, message: nil, lastMessageDate: nil, isOnline: true, hasUnreadMessages: true)
+            let conversation = ConversationModel(userName: userName, messages: [], userID: userID, message: nil, isOnline: true, hasUnreadMessages: true)
             conversations.append(conversation)
         }
         conversationsDelegate?.conversationsDidUpdate(conversations: conversations)
-//        conversationDelegate?.didUserIsOnline(online: true)
+        conversationDelegate?.userDidChangeState(isOnline: true)
     }
     
     func didLostUser(userID: String) {
@@ -44,7 +45,7 @@ class CommunicationManager: NSObject, CommunicatorDelegate {
             conversation.isOnline = false
         }
         conversationsDelegate?.conversationsDidUpdate(conversations: conversations)
-//        conversationDelegate?.didUserIsOnline(online: false)
+        conversationDelegate?.userDidChangeState(isOnline: false)
     }
     
     func failedToStartBrowsingForUsers(error: Error) {

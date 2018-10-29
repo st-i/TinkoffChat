@@ -23,6 +23,7 @@ class ConversationViewController: UIViewController, ConversationCommunicatorProt
         super.viewDidLoad()
 //        navigationItem.title = displayModel?.contactName
 //        conversationDisplayModels = ConversationInteractor.createDisplayModels()
+        navigationItem.title = currentConversation?.userName
         setupTableView()
         communicationManager = CommunicationManager()
         communicationManager?.conversationDelegate = self
@@ -37,30 +38,26 @@ class ConversationViewController: UIViewController, ConversationCommunicatorProt
     }
     
     @IBAction func sendMessageAction(_ sender: Any) {
-        hideKeyboard()
-        let newMessage = MessageModel(messageID: nil, text: textInputTextField.text, isIncoming: false, date: Date())
-        currentConversation?.messages?.append(newMessage)
-        DispatchQueue.main.async {
-            self.conversationTableView.reloadData()
-        }
-        communicationManager?.multipeerCommunicator?.sendMessage(string: textInputTextField.text!, to: (currentConversation?.userID)!, completionHandler: { (didSend, error) in
-            if !didSend {
-                if let unwrappedError = error {
-                    print("Message was not sent because of error: \(unwrappedError)")
-                }else{
-                    print("Message was not sent because of unknown error")
-                }
-            }else{
-                print("Message was successfully sent")
+        if textInputTextField.text != "" {
+            let newMessage = MessageModel(messageID: nil, text: textInputTextField.text, isIncoming: false, date: Date())
+            currentConversation?.messages?.append(newMessage)
+            DispatchQueue.main.async {
+                self.conversationTableView.reloadData()
             }
-            
-        })
-        textInputTextField.text = ""
-    }
-    
-    func hideKeyboard() {
-        textInputTextField.resignFirstResponder()
-        textFieldBottomConstraint.constant = 10
+            communicationManager?.multipeerCommunicator?.sendMessage(string: textInputTextField.text!, to: (currentConversation?.userID)!, completionHandler: { (didSend, error) in
+                if !didSend {
+                    if let unwrappedError = error {
+                        print("Message was not sent because of error: \(unwrappedError)")
+                    }else{
+                        print("Message was not sent because of unknown error")
+                    }
+                }else{
+                    print("Message was successfully sent")
+                }
+                
+            })
+            textInputTextField.text = ""
+        }
     }
     
     //MARK: - ConversationCommunicatorProtocol
@@ -70,5 +67,9 @@ class ConversationViewController: UIViewController, ConversationCommunicatorProt
         DispatchQueue.main.async {
             self.conversationTableView.reloadData()
         }
+    }
+    
+    func userDidChangeState(isOnline: Bool) {
+        sendButon.isEnabled = isOnline
     }
 }

@@ -17,6 +17,7 @@ class ConversationsListViewController: UIViewController, ​ThemesViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.title = "Tinkoff Chat"
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Profile", style: .plain, target: self, action: #selector(openProfileViewController))
 //        conversationsDisplayModels = ConversationsListInteractor.createDisplayModels()
