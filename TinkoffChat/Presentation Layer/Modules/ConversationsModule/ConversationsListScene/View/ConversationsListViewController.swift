@@ -70,15 +70,16 @@ class ConversationsListViewController: UIViewController, ​ThemesViewController
         let themesViewController = storyBoard.instantiateViewController(withIdentifier: "ThemesViewController") as! ThemesViewController
         
         //Для VC на Objective-C
-//        themesViewController!.themesDelegate = self
+        themesViewController.themesDelegate = self
+        themesViewController.model = Themes()
         
         //Для VC на Swift'е
-        themesViewController.didSelectThemeClosure = { [unowned self] (selectedTheme) in
-            if let _selectedTheme = selectedTheme {
-                self.logThemeChanging(selectedTheme: _selectedTheme)
-                self.setupNewAppTheme(selectedTheme: _selectedTheme, controller: themesViewController)
-            }
-        }
+//        themesViewController.didSelectThemeClosure = { [unowned self] (selectedTheme) in
+//            if let _selectedTheme = selectedTheme {
+//                self.logThemeChanging(selectedTheme: _selectedTheme)
+//                self.setupNewAppTheme(selectedTheme: _selectedTheme, controller: themesViewController)
+//            }
+//        }
         
         let navController = UINavigationController(rootViewController: themesViewController)
         present(navController, animated: true, completion: nil)

@@ -11,13 +11,15 @@ import UIKit
 class OperationDataManager: UserDataInteractionProtocol {
     
     let userDataService: UserDataService
+    let operationQueue: OperationQueue
     
     init(userDataService: UserDataService) {
         self.userDataService = userDataService
+        self.operationQueue = OperationQueue()
     }
     
     func saveUserData(_ userModel: UserModel, completion: @escaping (Bool) -> ()) {
-        OperationQueue().addOperation {
+        self.operationQueue.addOperation {
             let savingResult = self.userDataService.saveUserData(userModel)
             
             OperationQueue.main.addOperation({
@@ -27,7 +29,7 @@ class OperationDataManager: UserDataInteractionProtocol {
     }
     
     func loadUserData(completion: @escaping (UserModel) -> ()) {
-        OperationQueue().addOperation {
+        self.operationQueue.addOperation {
             let userModel = self.userDataService.loadUserData()
             
             OperationQueue.main.addOperation({

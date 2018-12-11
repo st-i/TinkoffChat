@@ -6,6 +6,8 @@
 //  Copyright © 2018 Иван Стефанов. All rights reserved.
 //
 
+//BUNDLE_PRODUCT_IDENTIFIER
+
 import UIKit
 
 @UIApplicationMain

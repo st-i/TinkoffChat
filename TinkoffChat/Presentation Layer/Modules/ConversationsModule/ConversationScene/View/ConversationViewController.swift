@@ -42,6 +42,7 @@ class ConversationViewController: UIViewController, ConversationCommunicatorProt
             let newMessage = MessageModel(messageID: nil, text: textInputTextField.text, isIncoming: false, date: Date())
             currentConversation?.messages?.append(newMessage)
             DispatchQueue.main.async {
+//                currentConversation?.messages?.append(newMessage)
                 self.conversationTableView.reloadData()
             }
             communicationManager?.multipeerCommunicator?.sendMessage(string: textInputTextField.text!, to: (currentConversation?.userID)!, completionHandler: { (didSend, error) in

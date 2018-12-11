@@ -8,6 +8,12 @@
 
 import UIKit
 
+#if WITHLOG
+let LOG_TOGGLE = true
+#else
+let LOG_TOGGLE = false
+#endif
+
 public enum ApplicationState: Int {
     case active
     case inactive
@@ -17,10 +23,8 @@ public enum ApplicationState: Int {
 
 class Logger: NSObject {
     
-    static var logToggle: Bool = false //задание со звездочкой
-
     static func logAppState(_ previousState: ApplicationState, _ methodName: String) {
-        if logToggle {
+        if LOG_TOGGLE {
             var previousStateName: String = ""
             var currentStateName: String = ""
             
@@ -50,7 +54,7 @@ class Logger: NSObject {
     }
     
     static func logViewControllerMethod(_ methodName: String) {
-        if logToggle {
+        if LOG_TOGGLE {
             let stringToLog = "View Controller's called method is \(methodName)"
             print(stringToLog)
         }

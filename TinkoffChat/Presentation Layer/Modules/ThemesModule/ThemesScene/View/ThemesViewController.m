@@ -29,7 +29,7 @@
     UIColor *theme1 = [UIColor whiteColor];
     UIColor *theme2 = [UIColor darkGrayColor];
     UIColor *theme3 = [UIColor yellowColor];
-    _model = [[Themes alloc]init];
+//    _model = [[Themes alloc] init];
     _model.theme1 = theme1;
     _model.theme2 = theme2;
     _model.theme3 = theme3;    
@@ -46,10 +46,10 @@
 }
 
 - (void)dealloc {
-    [_model release];
+//    [_model release];
     _model = nil;
     _themesDelegate = nil;
-    [super dealloc];
+//    [super dealloc];
 }
 
 #pragma mark - Getters
@@ -72,8 +72,9 @@
 
 - (void)setModel:(Themes *)model {
     if (_model != model) {
-        [_model release];
-        _model = [model retain];
+//        [_model release];
+//        _model = [model retain];
+        _model = model;
     }
 }
 
@@ -99,7 +100,9 @@
             selectedTheme = [UIColor whiteColor];
             break;
     }
-    [_themesDelegate themesViewController:self didSelectTheme:selectedTheme];
+    if ([_themesDelegate respondsToSelector:@selector(themesViewController:didSelectTheme:)]) {
+        [_themesDelegate themesViewController:self didSelectTheme:selectedTheme];
+    }
 }
 
 @end

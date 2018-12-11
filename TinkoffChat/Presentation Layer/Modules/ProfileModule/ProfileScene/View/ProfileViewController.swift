@@ -13,15 +13,11 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBOutlet weak var userPhotoImageView: UIImageView!
     @IBOutlet weak var photoButton: UIButton!
     @IBOutlet weak var photoButtonImageView: UIImageView!
-//    @IBOutlet weak var nameLabel: UILabel!
-//    @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet var userNameTextField: UITextField!
     @IBOutlet var aboutMeTextView: UITextView!
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var gcdButton: UIButton!
     @IBOutlet weak var operationButton: UIButton!
-
-    var imagePickerController = UIImagePickerController()
     
     var gcdDataManager: UserDataInteractionProtocol?
     var operationDataManager: UserDataInteractionProtocol?
@@ -45,7 +41,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         userNameTextField.delegate = self
         aboutMeTextView.isUserInteractionEnabled = false
         aboutMeTextView.delegate = self
-        imagePickerController.delegate = self
         
         setupSavingManagers()
         loadAndShowUserData()
@@ -187,20 +182,22 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     //MARK: - UIAlertController
     
     private func showGetPhotoActionSheet() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         actionSheet.addAction(UIAlertAction(title: "Установить из галереи", style: .default) { (action) in
             if (UIImagePickerController.isSourceTypeAvailable(.photoLibrary)) {
-                self.imagePickerController.allowsEditing = false
-                self.imagePickerController.sourceType = .photoLibrary
-                self.present(self.imagePickerController, animated: true, completion: nil)
+                imagePickerController.allowsEditing = false
+                imagePickerController.sourceType = .photoLibrary
+                self.present(imagePickerController, animated: true, completion: nil)
             } else {
                 self.showErrorAlert(message: "Произошла ошибка при попытке открыть галерею")
             }
         })
         actionSheet.addAction(UIAlertAction(title: "Сделать фото", style: .default) { (action) in
             if (UIImagePickerController.isSourceTypeAvailable(.camera)) {
-                self.imagePickerController.sourceType = .camera
-                self.present(self.imagePickerController, animated: true, completion: nil)
+                imagePickerController.sourceType = .camera
+                self.present(imagePickerController, animated: true, completion: nil)
             } else {
                 self.showErrorAlert(message: "Произошла ошибка при попытке открыть камеру")
             }

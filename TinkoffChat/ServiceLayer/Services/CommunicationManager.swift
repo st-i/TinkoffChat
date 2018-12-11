@@ -21,7 +21,7 @@ class CommunicationManager: NSObject, CommunicatorDelegate {
     
     var multipeerCommunicator: MultipeerCommunicator?
     var conversations: [ConversationModel] = []
-    var conversationsDelegate: ConversationsCommunicatorProtocol?
+    weak var conversationsDelegate: ConversationsCommunicatorProtocol?
     var conversationDelegate: ConversationCommunicatorProtocol?
     
     override init() {
